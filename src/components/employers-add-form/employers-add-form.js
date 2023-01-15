@@ -16,13 +16,30 @@ class EmployerAddForm extends Component {
     });
   };
 
+  onSubmit = (e) => {
+    e.preventDefault();
+    const { name, salary } = this.state;
+
+    if (name && salary) {
+      this.props.onAdd({
+        name: name,
+        salary: salary,
+      });
+
+      this.setState({
+        name: '',
+        salary: '',
+      });
+    }
+  };
+
   render() {
     const { name, salary } = this.state;
 
     return (
       <div className="app-add-form">
         <h3>Добавьте нового сотрудника</h3>
-        <form className="add-form d-flex">
+        <form className="add-form d-flex" onSubmit={this.onSubmit}>
           {/* сделали инпуты управляемыми компонентами за счет добавления атрибута value. Теперь реакт не только меняет сосотояние, но и отслеживает значение формы */}
           <input
             className="form-control new-post-label"
