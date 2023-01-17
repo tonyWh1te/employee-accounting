@@ -17,6 +17,7 @@ class App extends Component {
         { name: 'John S.', salary: 5000, increase: false, elected: false, id: uuidv4() },
       ],
       term: '',
+      filter: 'none',
     };
   }
 
@@ -75,19 +76,35 @@ class App extends Component {
     this.setState({ term });
   };
 
+  filterEmp = (items, filter) => {
+    switch (filter) {
+      case 'salary':
+        return items.filter((item) => item.salary > 1000);
+      case 'rise':
+        return items.filter((item) => item.elected);
+      default:
+        return items;
+    }
+  };
+
+  onUpdateFilter = (filter) => {
+    this.setState({ filter });
+  };
+
   render() {
-    const { data, term } = this.state;
+    const { data, term, filter } = this.state;
     const amountToIncrease = this.state.data.filter((item) => item.increase).length;
     const visibleData = this.searchEmp(data, term);
+    const updatedData = this.filterEmp(visibleData, filter);
 
     return (
       <div className="app">
         <AppInfo employees={this.state.data.length} amountToIncrease={amountToIncrease} />
         <div className="search-panel">
           <SearchPanel onUpdateSearch={this.onUpdateSearch} />
-          <AppFilter />
+          <AppFilter onUpdateFilter={this.onUpdateFilter} filter={filter} />
         </div>
-        <EmployersList data={visibleData} onDelete={this.deleteItem} onToggleProp={this.onToggleProp} />
+        <EmployersList data={updatedData} onDelete={this.deleteItem} onToggleProp={this.onToggleProp} />
         <EmployerAddForm onAdd={this.addItem} />
       </div>
     );
