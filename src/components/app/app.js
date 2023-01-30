@@ -41,7 +41,7 @@ class App extends Component {
     this.setState(({ data }) => ({ data: [...data, newItem] }));
   };
 
-  onToggleProp = (id, prop) => {
+  onToggleProp = (id, prop, keyCode) => {
     // this.setState(({ data }) => {
     //   const index = data.findIndex((elem) => elem.id === id);
     //   const old = data[index];
@@ -52,14 +52,16 @@ class App extends Component {
     // });
 
     // или
-    this.setState(({ data }) => ({
-      data: data.map((item) => {
-        if (item.id === id) {
-          return { ...item, [prop]: !item[prop] };
-        }
-        return item;
-      }),
-    }));
+    if (typeof keyCode === 'undefined' || keyCode === 13 || keyCode === 32) {
+      this.setState(({ data }) => ({
+        data: data.map((item) => {
+          if (item.id === id) {
+            return { ...item, [prop]: !item[prop] };
+          }
+          return item;
+        }),
+      }));
+    }
   };
 
   searchEmp = (items, term) => {

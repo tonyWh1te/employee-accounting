@@ -24,7 +24,7 @@ class EmployersListItem extends Component {
 
     return (
       <li className={`list-group-item d-flex justify-content-between ${elected ? 'like' : ''} ${increase ? 'increase' : ''}`}>
-        <span className="list-group-item-label" data-toggle="elected" onClick={onToggleProp}>
+        <span className="list-group-item-label" tabIndex={0} data-toggle="elected" onClick={onToggleProp} onKeyDown={onToggleProp}>
           {name}
         </span>
         <input className="list-group-item-input" type="text" value={`${value}$`} onChange={this.onValueChange} />
